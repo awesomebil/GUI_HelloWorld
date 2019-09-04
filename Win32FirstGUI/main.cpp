@@ -1,6 +1,9 @@
 #include <windows.h>
 
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
+void AddMenus();
+
+HMENU hMenu;
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
 {
@@ -32,11 +35,19 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
 	{
+	case WM_CREATE:
+		AddMenus();
+		break;
 	case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
 		default:
 			return DefWindowProcW(hWnd, msg, wp, lp);
 	}
+
+}
+
+void AddMenus()
+{
 
 }
