@@ -1,7 +1,7 @@
 #include <windows.h>
 
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
-void AddMenus();
+void AddMenus(HWND);
 
 HMENU hMenu;
 
@@ -36,7 +36,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 	switch (msg)
 	{
 	case WM_CREATE:
-		AddMenus();
+		AddMenus(hWnd);
 		break;
 	case WM_DESTROY:
 			PostQuitMessage(0);
@@ -47,7 +47,11 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 
 }
 
-void AddMenus()
+void AddMenus(HWND hWnd)
 {
+	hMenu = CreateMenu();
 
+	AppendMenu(hMenu, MF_STRING, NULL, "File");
+
+	SetMenu(hWnd, hMenu);
 }
