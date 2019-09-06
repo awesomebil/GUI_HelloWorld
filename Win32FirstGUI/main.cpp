@@ -1,5 +1,9 @@
 #include <windows.h>
 
+#define FILE_MENU_NEW 1
+#define FILE_MENU_OPEN 2
+#define FILE_MENU_EXIT 3
+
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 void AddMenus(HWND);
 
@@ -35,12 +39,24 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
 	{
+	case WM_COMMAND:
+		
+		switch (wp)
+		{
+		case FILE_MENU_EXIT:
+			DestroyWindow(hWnd);
+			break;
+		case FILE_MENU_NEW:
+			MessageBeep(MB_ICONINFORMATION);
+		}
+
+		break;
 	case WM_CREATE:
 		AddMenus(hWnd);
-		break;
+		return 0;
 	case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
+		PostQuitMessage(0);
+		return 0;
 		default:
 			return DefWindowProcW(hWnd, msg, wp, lp);
 	}
@@ -50,8 +66,18 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 void AddMenus(HWND hWnd)
 {
 	hMenu = CreateMenu();
+	HMENU hFileMenu = CreateMenu();
+	HMENU hSubMenu = CreateMenu();
 
-	AppendMenu(hMenu, MF_STRING, NULL, "File");
+	AppendMenu(hSubMenu, MF_STRING, NULL, "SubMenu Item");
+
+	AppendMenu(hFileMenu, MF_STRING, FILE_MENU_NEW, "New");
+	AppendMenu(hFileMenu, MF_POPUP, (UINT_PTR) hSubMenu, "Open SubMenu");
+	AppendMenu(hFileMenu, MF_SEPARATOR, NULL, NULL);
+	AppendMenu(hFileMenu, MF_STRING, FILE_MENU_EXIT, "Exit");
+
+	AppendMenu(hMenu, MF_POPUP, (UINT_PTR)hFileMenu, "File");
+	AppendMenu(hMenu, MF_STRING, NULL, "Help");
 
 	SetMenu(hWnd, hMenu);
 }
