@@ -32,9 +32,6 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
 	switch (msg)
 	{
-	case WM_CREATE:
-		AddMenus(hWnd);
-		break;
 	case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
