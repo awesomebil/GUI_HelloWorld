@@ -52,6 +52,7 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 			break;
 		case FILE_MENU_NEW:
 			MessageBeep(MB_ICONINFORMATION);
+			break;
 		case CHANGE_TITLE:
 			wchar_t text[100];
 			GetWindowTextW(hEdit, text, 100);
